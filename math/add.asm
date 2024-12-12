@@ -14,7 +14,7 @@ read_int:
     mov ah, 01h             ; Wait for a key to be pressed
     int 21h                 ; Call the interrupt to get the character
     cmp al, 0Dh             ; If the user presses enter, we are done reading 0Dh is `\r` in ASCII
-    je read_done
+    je return_int
     imul bx, 10             ; Simple number manipulation, simply adding offset for the new digit imul is for signed integer
     and ax, 0Fh             ; Removing 4 upper bits to get the single digit from the lower 4 bits
     add bx, ax              ; bx += ax
@@ -27,7 +27,7 @@ return_int:
 display_int:
     xor cx, cx              ; clear cx
     cmp ax, 0               ; cmp ax with 0
-    jne print_loop          ; If the number is not 0, print the digit else print 0
+    jne push_digits         ; If the number is not 0, print the digit else print 0
     mov dx, '0'             ; If the number is 0, print
     push dx                 ; push dx to stack
     inc cx                  ; cx becomes a counter for the number of digits in the stack
