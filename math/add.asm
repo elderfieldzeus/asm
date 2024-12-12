@@ -39,8 +39,8 @@ push_digits:                ; If number is not 0, it goes to this function
     add dx, '0'             ; Convert the digit to ASCII
     push dx                 ; Push the digits to the stack
     inc cx                  ; increment cx for number of elements in stack
-    test ax, ax             ; This is similar to cmp ax, 0, cmp is an arithmetic operation, test is a logical operation
-    jnz push_digits
+    cmp ax, 0             ; This is similar to cmp ax, 0, cmp is an arithmetic operation, test is a logical operation
+    jne push_digits
 display_digits:
     pop dx                  ; Pop the digit from the stack
     mov ah, 02h             ; DOS interrupt to print the character, register dl will be used here, that is why we are storing the register dx
